@@ -3,6 +3,55 @@
 /* ############ COLORS  ############## */
 /* ############ END/COLORS  ############## */
 /* ############ TYPOGRAPHY  ############## */
+body{
+  background-color:rgb(32, 105, 254) !important
+}
+.top-header {
+  background-color: rgb(96, 129, 246) !important;
+}
+.card{
+  background-color: rgb(238, 241, 251) !important;
+  
+}
+.card-text {
+  color: black !important;
+}
+#prompt {
+  background-color: rgb(96, 129, 246) !important;
+  color: white !important;
+
+}
+#prompt, #prompt-btn{
+  background-color: rgb(96, 129, 246) !important;
+
+}
+.new-chat-btn{
+  color: white !important;
+  border-color: white !important;
+}
+.prompt-area{
+  color:white;
+  border:1px solid white !important;
+}
+
+.gpt-bubble{
+  background-color: gray !important;
+}
+.user-bubble{
+  background-color: white !important;
+}
+
+.avatar{
+  background-color: rgb(47, 92, 255) !important;
+}
+
+textarea::placeholder { /* Standard syntax */
+  color: rgb(145, 185, 250) !important;
+  opacity: 1 !important;
+}
+
+
+
 h1 {
     font-family: "Black Ops One", cursive;
     font-size: 18px;
@@ -46,8 +95,8 @@ h1 {
   body {
     font-size: 16px;
     font-family: "handjet", monospace;
-    color: #36ff19;
-    background: #051D29;
+    color: #0b0e16;
+    background: #f4fbff;
     -webkit-animation: ScanLine 10s ease-in-out infinite;
     -moz-animation: ScanLine 10s ease-in-out infinite;
     animation: ScanLine 10s ease-in-out infinite;
@@ -57,13 +106,13 @@ h1 {
       opacity: 0.8;
     }
     10% {
-      opacity: 0.5;
+      opacity: 0.7;
     }
     20% {
       opacity: 0.9;
     }
     30% {
-      opacity: 0.7;
+      opacity: 0.8;
     }
     40% {
       opacity: 0.9;
@@ -75,7 +124,7 @@ h1 {
       opacity: 0.9;
     }
     70% {
-      opacity: 0.6;
+      opacity: 0.8;
     }
     80% {
       opacity: 0.9;
@@ -92,13 +141,13 @@ h1 {
       opacity: 0.8;
     }
     10% {
-      opacity: 0.5;
+      opacity: 0.7;
     }
     20% {
       opacity: 0.9;
     }
     30% {
-      opacity: 0.7;
+      opacity: 0.8;
     }
     40% {
       opacity: 0.9;
@@ -110,7 +159,7 @@ h1 {
       opacity: 0.9;
     }
     70% {
-      opacity: 0.6;
+      opacity: 0.8;
     }
     80% {
       opacity: 0.9;
@@ -127,13 +176,13 @@ h1 {
       opacity: 0.8;
     }
     10% {
-      opacity: 0.5;
+      opacity: 0.7;
     }
     20% {
       opacity: 0.9;
     }
     30% {
-      opacity: 0.7;
+      opacity: 0.8;
     }
     40% {
       opacity: 0.9;
@@ -145,7 +194,7 @@ h1 {
       opacity: 0.9;
     }
     70% {
-      opacity: 0.6;
+      opacity: 0.8;
     }
     80% {
       opacity: 0.9;
@@ -529,7 +578,7 @@ main {
  padding: 10px 20px;
 }
 
-.chrono-items {
+.IAtinga-items {
   width: 100%;
   margin: 10px;
 }
@@ -546,7 +595,7 @@ main {
 .list-item:hover {
   cursor: pointer;
    background: rgba(37, 249, 45, 0.1);
-  border: 1px solid lime;
+  border: 1px solid rgb(64, 0, 255);
 }
 
 .topic-info {
@@ -576,7 +625,7 @@ main {
   cursor: not-allowed;
   list-style: none;
   background: rgba(37, 249, 45, 0.1);
-  border: 1px solid teal;
+  border: 1px solid rgb(32, 53, 134);
   margin-bottom: 5px;
   display: flex;
   align-items: center;
@@ -589,7 +638,7 @@ main {
     height: 48px;
     border-radius: 50%;
     display: inline-block;
-    border-top: 4px solid #00ff62;
+    border-top: 4px solid #1100ff;
     border-right: 4px solid transparent;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
@@ -603,7 +652,7 @@ main {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    border-bottom: 4px solid #00ff62;
+    border-bottom: 4px solid #0073ff;
     border-left: 4px solid transparent;
   }
   @keyframes rotation {

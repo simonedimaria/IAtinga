@@ -1,11 +1,12 @@
 #!/bin/bash
+echo "Starting the application..."
 
-# remove self
-rm -f /entrypoint.sh
+# Remove self
+# rm -f /entrypoint.sh
 
 SECRET=$(python -c "import secrets; print(secrets.randbelow(10**16))" | tr -d '\n')
 
-sed -i "s/REDACTED_SECRET/$SECRET/g" /home/chrono/chrono-mind/config.py
+sed -i "s/REDACTED_SECRET/$SECRET/g" /home/IAtinga/IAtinga/config.py
 
-# start supervisord and services
+# Start supervisord and services
 /usr/bin/supervisord -c /etc/supervisord.conf
