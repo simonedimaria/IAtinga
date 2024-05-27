@@ -21,9 +21,9 @@ ENV HOME="/home/chrono"
 RUN pip install -r requirements.txt
 
 # Download lm first-run dependencies
-# COPY config/lm_dependencies.py .
-# RUN python lm_dependencies.py
-# RUN rm lm_dependencies.py
+COPY config/lm_dependencies.py .
+RUN python lm_dependencies.py
+RUN rm lm_dependencies.py
 
 # Add readflag binary
 USER root

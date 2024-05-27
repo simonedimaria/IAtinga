@@ -6,8 +6,8 @@ from uuid import uuid4
 from utils import getRepository, evalCode
 from config import Config
 
-# lm.config['instruct_model'] = 'LaMini-Flan-T5-248M'
-# lm.config['max_tokens'] = 400
+lm.config['instruct_model'] = 'LaMini-Flan-T5-248M'
+lm.config['max_tokens'] = 400
 
 router = APIRouter()
 
@@ -38,10 +38,11 @@ async def createRoom(response: Response, params: createParams):
 
 
     # clear previous context
-    # lm.docs.clear()
+    lm.docs.clear()
+
 
     # store the doc
-    # lm.store_doc(content)
+    lm.store_doc(content)
 
     # save params
     Config.roomID = str(uuid4())
@@ -61,9 +62,9 @@ def ask_gpt(response: Response, chatParams: chatParams, room: str = Cookie(None)
         return {"message": "Room does not exist"}
 
     # get the response
-    # context = lm.get_doc_context(chatParams.prompt)
-    # context = context.split("\n")
-    # context = context[0]
+    context = lm.get_doc_context(chatParams.prompt)
+    context = context.split("\n")
+    context = context[0]
 
     # answer = lm.extract_answer(chatParams.prompt, context)
     answer = "test answer"
