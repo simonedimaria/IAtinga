@@ -15,4 +15,4 @@ b = 5
 # Swap a and b
 """)
 
-# Download the models and other necessary files on the first run.
+# download the models and other necessary files on the first run
