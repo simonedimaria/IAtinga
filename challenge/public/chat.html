@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChronoMind | Chat</title>
+    <title>IAtinga | Chat</title>
     <meta name="author" content="rayhan0x01">
     <link href="https://fonts.googleapis.com/css?family=Black+Ops+One%7CSource+Code+Pro%7CHandjet" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -15,7 +15,7 @@
         
         <div class="container-fluid g-0 w-100">
             <div class="container-fluid top-header">
-                <h1 class="ms-2">ChronoMind Knowledge Base: <span id="topic"></span></h1>
+                <h1 class="ms-2">IAtinga Knowledge Base: <span id="topic"></span></h1>
                 <p class="ms-auto">
                     <a href="/" class="w-100">
                         <button class="btn btn-outline-light w-100 w-sm-50 new-chat-btn" role="button"><span class="chat-lg">New Room</span></button>
@@ -31,7 +31,7 @@
                             <div id="chat-placeholder" class="chat-placeholder d-flex justify-content-center align-items-center h-100">
                                 <div class="row w-100">
                                     <div class="col text-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                                         <p class="bo my-3">Examples</p>
                                         <div class="card my-3">
                                             <div class="card-body">
@@ -50,7 +50,7 @@
                                         </div>
                                     </div>
                                     <div class="col text-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                                         <p class="bo my-3">Limitations</p>
                                         <div class="card my-3">
                                             <div class="card-body">
@@ -84,10 +84,10 @@
                             <div class="input-group prompt-area">
                                 <textarea class="form-control prompt-box" id="prompt" placeholder="Your Question Here..."></textarea>
                                 <button class="btn d-flex align-items-end pb-4" id="prompt-btn" role="button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0ec80e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                                 </button>
                             </div>
-                            <label class="text-muted-2 w-100 text-center">ChronoMind can make mistakes. Consider checking important information.</label>
+                            <label class="text-muted-2 w-100 text-center">IAtinga can make mistakes. Consider checking important information.</label>
                         </div>
                     </div>
                 </div>

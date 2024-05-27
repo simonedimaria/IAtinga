@@ -1,40 +1,40 @@
 FROM python:3.8.18-bookworm
 
-# install dependencies
+# Install dependencies
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y supervisor gcc \
     && rm -rf /var/lib/apt/lists/*
 
 # add user
-RUN useradd -ms /bin/bash chrono
+RUN useradd -ms /bin/bash IAtinga
 
-# add application
-RUN mkdir -p /home/chrono/chrono-mind
-WORKDIR /home/chrono/chrono-mind
-COPY challenge .
-RUN chown -R chrono:root /home/chrono/chrono-mind
+# Add application
+RUN mkdir -p /home/IAtinga/IAtinga
+WORKDIR /home/IAtinga/IAtinga
+RUN chown -R IAtinga:root /home/IAtinga/IAtinga
 
-# install python dependencies as chrono
-USER chrono
-ENV PATH="${PATH}:/home/chrono/.local/bin"
-ENV HOME="/home/chrono"
+COPY challenge/requirements.txt .
+# Install python dependencies as IAtinga
+USER IAtinga
+ENV PATH="${PATH}:/home/IAtinga/.local/bin"
+ENV HOME="/home/IAtinga"
 RUN pip install -r requirements.txt
 
-# download lm first-run dependencies
+# Download lm first-run dependencies
 COPY config/lm_dependencies.py .
 RUN python lm_dependencies.py
 RUN rm lm_dependencies.py
 
-# add readflag binary
+# Add readflag binary
 USER root
 COPY flag.txt /root/flag
 COPY config/readflag.c /
 RUN gcc -o /readflag /readflag.c && chmod 4755 /readflag && rm /readflag.c
 
-# setup superivsord
+# Setup superivsord
 COPY config/supervisord.conf /etc/supervisord.conf
 
-# expose the port app is reachable on
+# Expose the port app is reachable on
 EXPOSE 1337
 EXPOSE 8888
 
@@ -42,5 +42,6 @@ EXPOSE 8888
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# run entrypoint script
+COPY challenge .
+# Run entrypoint script
 CMD ["/entrypoint.sh"]

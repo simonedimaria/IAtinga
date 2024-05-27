@@ -1,36 +1,49 @@
 const chatExamples = {
-    "weapon-systems": [
-        "name of the mutant energy weapons",
-        "what's a Voltcaster?",
-        "mutant bombs list"
-    ],
-    "location-intelligence": [
-        "list all the mutant camps",
-        "overview of the Western Wastes",
-        "what is the coordinate of Whispering Pines?"
-    ],
-    "communication-systems": [
-        "names of the communication systems",
-        "100 km range communication device",
-        "what's RiftRaider SatPhone?",
-    ],
+
     "default": [
         "what is the airspeed velocity of an unladen swallow?",
         "summarize this for me",
         "who are you?"
+    ],
+    "iotinga": [
+        "Who is the CBO (Chief Boccioni Officer)",
+        "What Alerighi does?",
+        "AleRighi's Guide on how to Bypassing RAI License fees",
+
+    ],
+    "iotinga-eng": [
+        "Who is the CBO (Chief Boccioni Officer)",
+        "What Alerighi does?",
+        "AleRighi's Guide on how to Bypassing RAI License fees",
+        "How does Iotinga simplify business processes?",
+        "What are the benefits of working with Iotinga?",
+        "What does Iotinga specialize in?",
+        "What's Iotinga's philosophy?",
+        "How does Iotinga bring innovation to market?",
+        "Which industries does Iotinga cover?"
+
     ]
+
+}
+function getRandomElements(arr, numElements) {
+    // Randomize the array
+    const randomizedArray = arr.sort(() => Math.random() - 0.5);
+    
+    // Return the first numElements elements from the randomized array
+    return randomizedArray.slice(0, numElements);
 }
 
-$(document).ready(function() {
+
+$(document).ready(function () {
     let params = new URLSearchParams(window.location.search);
 
     if (params.has('topic')) {
         const topic = params.get('topic');
-        const examples = chatExamples[topic] || chatExamples['default'];
-
+        let examples = chatExamples[topic] || chatExamples['default'];
+        examples=getRandomElements(examples, 3);
         $('#topic').text(topic);
 
-        $('.chat-example').each(function(index) {
+        $('.chat-example').each(function (index) {
             $(this).text(examples[index]);
         });
     } else {
@@ -38,20 +51,20 @@ $(document).ready(function() {
 
         $('#topic').text('Unknown');
 
-        $('.chat-example').each(function(index) {
+        $('.chat-example').each(function (index) {
             $(this).text(examples[index]);
         });
     }
 
-    $('.chat-example').on('click', function() {
+    $('.chat-example').on('click', function () {
         $('#prompt').val($(this).text());
     });
 
-    $('#prompt').on('input keydown', function(e) {
+    $('#prompt').on('input keydown', function (e) {
         $('#resp-msg').hide();
 
         if (e.key === 'Enter' && e.ctrlKey) {
-            $(this).val(function(i, val) {
+            $(this).val(function (i, val) {
                 return val + "\n";
             });
         }
@@ -86,7 +99,7 @@ const toggleProps = (state) => {
 const submitPrompt = async () => {
     toggleProps(true);
 
-    if(!$('#chat-placeholder').hasClass('hidden')) {
+    if (!$('#chat-placeholder').hasClass('hidden')) {
         $('#chat-placeholder').addClass('hidden');
     }
 
@@ -135,7 +148,7 @@ const submitPrompt = async () => {
             <span class="avatar gpt-avatar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ff00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-codesandbox"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline><polyline points="7.5 19.79 7.5 14.6 3 12"></polyline><polyline points="21 12 16.5 14.6 16.5 19.79"></polyline><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
             </span>
-            <span class="bo fw-bold ms-3 fs-6">ChronoMind</span>
+            <span class="bo fw-bold ms-3 fs-6">IAtinga</span>
         </div>
         <p class="message gpt-message" id="${randomAid}">
 
@@ -161,14 +174,14 @@ const submitPrompt = async () => {
                 strings: [data.answer],
                 typeSpeed: 15,
                 showCursor: false,
-                onStringTyped: function() {
+                onStringTyped: function () {
                     window.observer.disconnect();
                     toggleProps(false);
                 }
             });
         } else {
             let data = await res.json();
-            card.text(data.message? data.message : 'An error occurred, if this error persists, try a different prompt.');
+            card.text(data.message ? data.message : 'An error occurred, if this error persists, try a different prompt.');
             card.attr('class', 'alert alert-danger');
             card.show();
             toggleProps(false);
@@ -186,7 +199,7 @@ const submitPrompt = async () => {
 
 const scrollToBottom = () => {
     if (window.lastScrollHeight < $('#chat-bubbles')[0].scrollHeight) {
-        $('.chat-row').animate({ scrollTop: parseInt($('#chat-bubbles')[0].scrollHeight) },1000);
+        $('.chat-row').animate({ scrollTop: parseInt($('#chat-bubbles')[0].scrollHeight) }, 1000);
         window.lastScrollHeight = $('#chat-bubbles')[0].scrollHeight;
     }
 }

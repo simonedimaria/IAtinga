@@ -39,6 +39,7 @@ async def createRoom(response: Response, params: createParams):
     # clear previous context
     lm.docs.clear()
 
+
     # store the doc
     lm.store_doc(content)
 
@@ -68,4 +69,3 @@ def ask_gpt(response: Response, chatParams: chatParams, room: str = Cookie(None)
 
     # return the response
     return {"answer": answer}
-
