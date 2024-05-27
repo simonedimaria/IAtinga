@@ -6,18 +6,18 @@ RUN apt-get update && apt-get install -y supervisor gcc \
     && rm -rf /var/lib/apt/lists/*
 
 # add user
-RUN useradd -ms /bin/bash chrono
+RUN useradd -ms /bin/bash IAtinga
 
 # Add application
-RUN mkdir -p /home/chrono/chrono-mind
-WORKDIR /home/chrono/chrono-mind
-RUN chown -R chrono:root /home/chrono/chrono-mind
+RUN mkdir -p /home/IAtinga/IAtingaIAtinga
+WORKDIR /home/IAtinga/IAtingaIAtinga
+RUN chown -R IAtinga:root /home/IAtinga/IAtingaIAtinga
 
 COPY challenge/requirements.txt .
-# Install python dependencies as chrono
-USER chrono
-ENV PATH="${PATH}:/home/chrono/.local/bin"
-ENV HOME="/home/chrono"
+# Install python dependencies as IAtinga
+USER IAtinga
+ENV PATH="${PATH}:/home/IAtinga/.local/bin"
+ENV HOME="/home/IAtinga"
 RUN pip install -r requirements.txt
 
 # Download lm first-run dependencies

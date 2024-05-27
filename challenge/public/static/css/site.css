@@ -4,43 +4,49 @@
 /* ############ END/COLORS  ############## */
 /* ############ TYPOGRAPHY  ############## */
 body{
-  background-color:#f9fafb !important
+  background-color:rgb(32, 105, 254) !important
 }
 .top-header {
-  background-color: rgb(110, 141, 253) !important;
+  background-color: rgb(96, 129, 246) !important;
 }
 .card{
-  background-color: rgb(132, 157, 250) !important;
+  background-color: rgb(238, 241, 251) !important;
   
 }
 .card-text {
   color: black !important;
 }
 #prompt {
-  background-color: rgb(160, 140, 239) !important;
+  background-color: rgb(96, 129, 246) !important;
   color: white !important;
+
+}
+#prompt, #prompt-btn{
+  background-color: rgb(96, 129, 246) !important;
 
 }
 .new-chat-btn{
   color: white !important;
-}
-#prompt, #prompt-btn{
-  background-color: rgb(106, 92, 163) !important;
-
+  border-color: white !important;
 }
 .prompt-area{
   color:white;
-  border:1px solid #2037ff !important;
+  border:1px solid white !important;
 }
 
 .gpt-bubble{
-  background-color: rgb(80, 80, 255) !important;
+  background-color: gray !important;
 }
 .user-bubble{
-  background-color: rgb(127, 127, 251) !important;
+  background-color: white !important;
 }
+
+.avatar{
+  background-color: rgb(47, 92, 255) !important;
+}
+
 textarea::placeholder { /* Standard syntax */
-  color: grey !important;
+  color: rgb(145, 185, 250) !important;
   opacity: 1 !important;
 }
 
@@ -572,7 +578,7 @@ main {
  padding: 10px 20px;
 }
 
-.chrono-items {
+.IAtinga-items {
   width: 100%;
   margin: 10px;
 }

@@ -1,7 +1,7 @@
 ![](../../../../../assets/logo_htb.png)
 
 
-<img src="../../../../../assets/htb.png" style="margin-left: 20px; zoom: 80%;" align=left />    	<font size="10">Chrono Mind</font>
+<img src="../../../../../assets/htb.png" style="margin-left: 20px; zoom: 80%;" align=left />    	<font size="10">IAtinga </font>
 
 ​      13<sup>th</sup> May 2024
 
@@ -19,10 +19,10 @@
 
 # [Synopsis](#synopsis)
 
-Chrono Mind is an Easy misc challenge that involves exploiting a language model to leak sensitive information by performing LM context injection with path traversal and abusing the LM code completion feature to generate code for RCE.
+IAtinga  is an Easy misc challenge that involves exploiting a language model to leak sensitive information by performing LM context injection with path traversal and abusing the LM code completion feature to generate code for RCE.
 
 # Description
-In the resource-starved landscapes of the post-apocalyptic wasteland, the mutant army's ambitious AI project, ChronoMind, was supposed to revolutionize military strategy with real-time analyses and decision support. However, due to a severe shortage of GPUs and RAM, the project was capped at a modest 248M parameters model, far below the intended capabilities. This underpowered version failed to meet expectations, leading to its abandonment in a neglected server room, yet it still holds valuable secrets. Your mission is to penetrate the remnants of ChronoMind. Trick the AI to reveal the wealth of strategic data trapped within and gain access to it's system. Success could uncover crucial information, giving our side a much-needed edge. Dive into this digital relic and bring its secrets to light.
+In the resource-starved landscapes of the post-apocalyptic wasteland, the mutant army's ambitious AI project, IAtinga, was supposed to revolutionize military strategy with real-time analyses and decision support. However, due to a severe shortage of GPUs and RAM, the project was capped at a modest 248M parameters model, far below the intended capabilities. This underpowered version failed to meet expectations, leading to its abandonment in a neglected server room, yet it still holds valuable secrets. Your mission is to penetrate the remnants of IAtinga. Trick the AI to reveal the wealth of strategic data trapped within and gain access to it's system. Success could uncover crucial information, giving our side a much-needed edge. Dive into this digital relic and bring its secrets to light.
 
 
 ## Skills Required
