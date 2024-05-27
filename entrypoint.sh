@@ -1,7 +1,8 @@
 #!/bin/bash
+echo "Starting the application..."
 
 # Remove self
-rm -f /entrypoint.sh
+# rm -f /entrypoint.sh
 
 SECRET=$(python -c "import secrets; print(secrets.randbelow(10**16))" | tr -d '\n')
 

@@ -11,9 +11,9 @@ RUN useradd -ms /bin/bash chrono
 # Add application
 RUN mkdir -p /home/chrono/chrono-mind
 WORKDIR /home/chrono/chrono-mind
-COPY challenge .
 RUN chown -R chrono:root /home/chrono/chrono-mind
 
+COPY challenge/requirements.txt .
 # Install python dependencies as chrono
 USER chrono
 ENV PATH="${PATH}:/home/chrono/.local/bin"
@@ -21,9 +21,9 @@ ENV HOME="/home/chrono"
 RUN pip install -r requirements.txt
 
 # Download lm first-run dependencies
-COPY config/lm_dependencies.py .
-RUN python lm_dependencies.py
-RUN rm lm_dependencies.py
+# COPY config/lm_dependencies.py .
+# RUN python lm_dependencies.py
+# RUN rm lm_dependencies.py
 
 # Add readflag binary
 USER root
@@ -41,5 +41,6 @@ EXPOSE 1337
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+COPY challenge .
 # Run entrypoint script
 CMD ["/entrypoint.sh"]
