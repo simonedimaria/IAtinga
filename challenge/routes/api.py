@@ -69,19 +69,3 @@ def ask_gpt(response: Response, chatParams: chatParams, room: str = Cookie(None)
     # return the response
     return {"answer": answer}
 
-@router.post("/copilot/complete_and_run")
-def copilot_complete_and_run(response: Response, params: copilotParams):
-    if Config.copilot_key != params.copilot_key:
-        response.status_code = 403
-        return {"message": "Invalid API key"}
-
-    # get code completion
-    completion = lm.code(params.code)
-
-    if not completion.strip():
-        return {"message": "Failed to get code completion"}
-
-    full_code = params.code + completion.strip()
-
-    # return the response
-    return {"completion": full_code, "result": evalCode(full_code)}

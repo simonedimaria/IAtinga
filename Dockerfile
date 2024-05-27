@@ -36,6 +36,7 @@ COPY config/supervisord.conf /etc/supervisord.conf
 
 # expose the port app is reachable on
 EXPOSE 1337
+EXPOSE 8888
 
 # copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh

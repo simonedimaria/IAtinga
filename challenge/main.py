@@ -6,10 +6,12 @@ from config import Config
 
 app = FastAPI(title="main app", docs_url=None, redoc_url=None)
 api = FastAPI(title="api app", docs_url=None, redoc_url=None)
+admin = FastAPI(title="admin app", docs_url=None, redoc_url=None)
 
 api.include_router(api_router)
 
 app.mount("/api", api)
+app.mount("/admin", admin)
 
 @app.get('/chat/{room}')
 def chat(room: str):
