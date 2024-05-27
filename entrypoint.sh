@@ -6,7 +6,7 @@ echo "Starting the application..."
 
 SECRET=$(python -c "import secrets; print(secrets.randbelow(10**16))" | tr -d '\n')
 
-sed -i "s/REDACTED_SECRET/$SECRET/g" /home/IAtinga/IAtingaIAtinga/config.py
+sed -i "s/REDACTED_SECRET/$SECRET/g" /home/IAtinga/IAtinga/config.py
 
 # Start supervisord and services
 /usr/bin/supervisord -c /etc/supervisord.conf

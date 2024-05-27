@@ -9,9 +9,9 @@ RUN apt-get update && apt-get install -y supervisor gcc \
 RUN useradd -ms /bin/bash IAtinga
 
 # Add application
-RUN mkdir -p /home/IAtinga/IAtingaIAtinga
-WORKDIR /home/IAtinga/IAtingaIAtinga
-RUN chown -R IAtinga:root /home/IAtinga/IAtingaIAtinga
+RUN mkdir -p /home/IAtinga/IAtinga
+WORKDIR /home/IAtinga/IAtinga
+RUN chown -R IAtinga:root /home/IAtinga/IAtinga
 
 COPY challenge/requirements.txt .
 # Install python dependencies as IAtinga
