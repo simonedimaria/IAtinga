@@ -12,10 +12,19 @@ from config import Config
 TASKS: Dict[str, Dict] = {}
 
 def only_admin(request: Request):
-    #authorization: str = request.headers.get('Authorization')
-    #if authorization is None or authorization != f"Bearer {Config.boccioni_token}":
-    #    raise HTTPException(status_code=403, detail="Unauthorized")
-    pass
+    authorization: str = request.headers.get('Authorization')
+    if authorization is None or authorization != f"Bearer {Config.boccioni_token}":
+        raise HTTPException(status_code=403, detail="Unauthorized")
+
+def update_playbooks():
+    playbook_files = os.listdir("playbooks")
+    for playbook_file in playbook_files:
+        if playbook_file not in TASKS:
+            TASKS[playbook_file] = {
+                'status': 'stopped',
+                'playbook': playbook_file,
+            }
+    return True
 
 router = APIRouter(
     tags=["admin"],
@@ -24,42 +33,42 @@ router = APIRouter(
 
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/")
+@router.get("/dashboard")
 async def admin_home(request: Request):
+    update_playbooks()
     return templates.TemplateResponse(
             name="admin.html", context={"request": request, "tasks": TASKS}
         )
 
 @router.get("/tasks")
 async def get_tasks():
+    update_playbooks()
     return JSONResponse(content=TASKS)
 
-@router.post("/tasks")
-async def create_task(request: Request, playbook: str):
-    task_id = str(len(TASKS) + 1)
-    TASKS[task_id] = {
-        'status': 'pending',
-        'playbook': playbook
-    }
+@router.post("/run/{task_name}")
+async def run_playbook(task_name: str):
+    update_playbooks()
+    task_path = os.path.join("playbooks", task_name)
+    TASKS[task_name]['status'] = 'running'
+    try:
+        result = subprocess.run(
+            ['ansible-playbook', task_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True
+        )
+        TASKS[task_name]['status'] = 'completed'
+        TASKS[task_name]['output'] = result.stdout
+    except Exception as e:
+        TASKS[task_name]['status'] = 'failed'
+        TASKS[task_name]['error'] = str(e)
+    return JSONResponse(content={'message': f"{task_name} is now running"}, status_code=201)
 
-    def run_playbook(task_id):
-        TASKS[task_id]['status'] = 'running'
-        try:
-            result = subprocess.run(['ansible-playbook', playbook], capture_output=True, text=True)
-            TASKS[task_id]['status'] = 'completed'
-            TASKS[task_id]['output'] = result.stdout
-        except Exception as e:
-            TASKS[task_id]['status'] = 'failed'
-            TASKS[task_id]['error'] = str(e)
-
-    Thread(target=run_playbook, args=(task_id,)).start()
-
-    return JSONResponse(content={"request": request, 'task_id': task_id}, status_code=201)
-
-@router.get("/tasks/{task_id}")
-async def get_task_status(task_id: str):
-    if task_id in TASKS:
-        return TASKS[task_id]
+@router.get("/tasks/{task_name}")
+async def get_task_status(task_name: str):
+    update_playbooks()
+    if task_name in TASKS:
+        return TASKS[task_name]
     else:
         raise HTTPException(status_code=404, detail="Task not found")
 
@@ -67,16 +76,18 @@ async def get_task_status(task_id: str):
 
 @router.post("/upload")
 async def upload_playbook(playbook: UploadFile = File(...)):
+    update_playbooks()
     file_location = os.path.join("playbooks", playbook.filename)
     directory = os.path.dirname(file_location)
     if not os.path.exists(directory):
         os.makedirs(directory)
     with open(file_location, "wb") as file:
         file.write(playbook.file.read())
-        
-    TASKS[playbook.filename] = {
-        'status': 'stopped',
-        'playbook': playbook.filename,
+    
+    if playbook.filename not in TASKS:
+        TASKS[playbook.filename] = {
+            'status': 'stopped',
+            'playbook': playbook.filename,
     }
     
     return JSONResponse(content={'message': 'Playbook uploaded successfully'}, status_code=201)

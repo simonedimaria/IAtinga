@@ -1,0 +1,13 @@
+---
+- name: Ping to check the integrity of iotinga.it
+  hosts: localhost
+  tasks:
+    - name: Ping iotinga.it
+      command: ping -c 4 iotinga.it
+      register: ping_output
+      ignore_errors: yes
+
+    - name: Display ping result
+      debug:
+        msg: "{{ ping_output.stdout if ping_output.rc == 0 else 'EMERGENZA! PERRY THE PWNER CI HA HACKERATO.' }}"
+

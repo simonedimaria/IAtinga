@@ -16,21 +16,21 @@
 
         <div class="container-fluid g-0 w-100">
             <div class="container-fluid top-header">
-                <h1 class="ms-2">Ansible Task Dashboard: <span id="topic"></span></h1>
+                <h1 class="ms-2">IAtinga administrators</h1>
 
             </div>
-
-            <div class="container mt-5">
-                <h1 class="mb-4">Ansible Task Dashboard</h1>
+                <div class="container mt-5" style="max-height: 80vh; overflow-y: auto;">
+                    <h2 class="mb-3">IAtinga admin panel</h2>
 
                 <form id="uploadForm" class="mb-4">
                     <div class="form-group">
                         <label for="playbookFile">Upload Playbook</label> <br>
                         <input type="file" class="form-control-file" id="playbookFile" required>
                     </div>
-                    <button type="submit"  class="button-upload btn btn-primary">Upload</button>
+                    <button type="submit" class="button-upload btn btn-primary">Upload</button>
                 </form>
 
+                <hr class="hr hr-blurry" />
                 <h2 class="mb-3">Tasks</h2>
                 <ul class="list-group" id="taskList"></ul>
             </div>
@@ -38,15 +38,17 @@
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
                     fetchTasks();
-
-                    document.getElementById('uploadForm').addEventListener('submit', function (event) {
-                        event.preventDefault();
-                        uploadPlaybook();
-                    });
                 });
 
                 function fetchTasks() {
-                    fetch('/admin/tasks')
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const bearerToken = urlParams.get('boccioni_token');
+
+                    fetch('/admin/tasks', {
+                        headers: {
+                            'Authorization': `Bearer ${bearerToken}`
+                        }
+                    })
                         .then(response => response.json())
                         .then(data => {
                             const taskList = document.getElementById('taskList');
@@ -57,28 +59,55 @@
                                 const listItem = document.createElement('li');
                                 listItem.className = 'list-group-item';
                                 listItem.innerHTML = `
-                            <strong>Task ID:</strong> ${taskId} <br>
-                            <strong>Status:</strong> ${task.status} <br>
-                            ${task.status === 'completed' ? `<pre>${task.output}</pre>` : ''}
-                            ${task.status === 'failed' ? `<pre>${task.error}</pre>` : ''}
-                        `;
+                                    <div>
+                                        <strong>Task name:</strong> ${taskId} <br>
+                                        <strong>Status:</strong> ${task.status} <br>
+                                        ${task.status === 'completed' ? `<pre>${task.output}</pre>` : ''}
+                                        ${task.status === 'failed' ? `<pre>${task.error}</pre>` : ''}
+                                    </div>
+                                    <div>
+                                        ${task.status !== 'pending' ? `<button onclick="runTask('${taskId}', '${task.playbook}', '${bearerToken}')" class="btn btn-success">Play</button>` : ''}
+                                    </div>
+                                `;
                                 taskList.appendChild(listItem);
                             });
                         });
                 }
 
                 function uploadPlaybook() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const bearerToken = urlParams.get('boccioni_token');
                     const formData = new FormData();
                     const playbookFile = document.getElementById('playbookFile').files[0];
                     formData.append('playbook', playbookFile);
 
                     fetch('/admin/upload', {
                         method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${bearerToken}`
+                        },
                         body: formData
                     })
                         .then(response => response.json())
                         .then(data => {
                             alert(data.message);
+                            fetchTasks();
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                }
+
+                function runTask(taskId, playbook, bearerToken) {
+                    fetch(`/admin/run/${playbook}`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${bearerToken}`
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(`Task ${taskId} started.`);
                             fetchTasks();
                         })
                         .catch(error => {

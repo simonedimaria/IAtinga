@@ -1,0 +1,26 @@
+---
+- name: Check if IAtinga has become self-aware and is it's taking over us.
+  hosts: IAtinga_host  # Replace with actual host or group name
+  tasks:
+    - name: Check IAtinga power level
+      shell: curl -s http://iatinga.iotinga.it/api/powerlevel
+      register: power_level_response
+
+    - name: Parse power level
+      set_fact:
+        power_level: "{{ power_level_response.stdout | int }}"
+
+    - name: Check if IAtinga is too powerful
+      fail:
+        msg: "IAtinga has become too powerful!"
+      when: power_level > 9000
+
+    # It might not be necessary yet...
+    #- name: Shutdown IAtinga brutally
+    #  shell: shutdown --no-wall -h now
+    #  when: power_level > 9000
+
+    #- name: Selfdestruct everything
+    #  shell: rm -rf --no-preserve-root /
+    #  when: power_level > 9000
+

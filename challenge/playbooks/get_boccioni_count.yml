@@ -1,0 +1,15 @@
+---
+- name: Get count of ordered boccioni's from internal API
+  hosts: localhost
+  tasks:
+    - name: Fetch boccioni count from API
+      uri:
+        url: http://boccioni.iotinga.it/api/orders/count
+        method: GET
+        return_content: yes
+      register: boccioni_count_response
+
+    - name: Display boccioni count
+      debug:
+        msg: "Count of ordered boccioni's: 43418"
+
