@@ -28,7 +28,10 @@ async def createRoom(response: Response, params: createParams):
         return {"message": "A room creation is already in progress"}
 
     # get knowledge repository
-    content = getRepository(params.topic).split("\n\n")
+    try:
+        content = getRepository(params.topic).split("\n\n")
+    except Exception:
+        return {"message": "Internal server error"}
 
     if not content:
         Config.createProgress = False
