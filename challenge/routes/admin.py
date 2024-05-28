@@ -63,10 +63,21 @@ async def get_task_status(task_id: str):
     else:
         raise HTTPException(status_code=404, detail="Task not found")
 
+
+
 @router.post("/upload")
 async def upload_playbook(playbook: UploadFile = File(...)):
     file_location = os.path.join("playbooks", playbook.filename)
+    directory = os.path.dirname(file_location)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
     with open(file_location, "wb") as file:
         file.write(playbook.file.read())
+        
+    TASKS[playbook.filename] = {
+        'status': 'stopped',
+        'playbook': playbook.filename,
+    }
+    
     return JSONResponse(content={'message': 'Playbook uploaded successfully'}, status_code=201)
 
