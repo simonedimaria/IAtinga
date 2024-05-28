@@ -5,4 +5,4 @@ class Config():
     createProgress = False
     chatProgress = False
     knowledgePath = f"{os.getcwd()}/repository"
-    copilot_key = "REDACTED_SECRET"
+    ADMIN_TOKEN = "alepalle"

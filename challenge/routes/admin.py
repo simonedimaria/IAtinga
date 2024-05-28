@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, File, UploadFile, HTTPException
+from fastapi import APIRouter, Request, File, UploadFile, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -6,67 +6,65 @@ from typing import Dict
 import subprocess
 import os
 from threading import Thread
-import config
-from functools import wraps
+from config import Config
 
-router = APIRouter()
 
-router.mount("/static", StaticFiles(directory="static"), name="static")
+TASKS: Dict[str, Dict] = {}
+
+def only_admin(request: Request):
+    authorization: str = request.headers.get('Authorization')
+    if authorization is None or authorization != f"Bearer {Config.ADMIN_TOKEN}":
+        raise HTTPException(status_code=403, detail="Unauthorized")
+
+router = APIRouter(
+    tags=["admin"],
+    dependencies=[Depends(only_admin)]
+)
+
 templates = Jinja2Templates(directory="templates")
 
-# Store tasks in memory (for simplicity; consider using a real database)
-tasks: Dict[str, Dict] = {}
-
-def only_admin(func):
-    @wraps(func)
-    async def wrapper(request: Request, *args, **kwargs):
-        # check if authorization header corresponds to admin token
-        if request.headers['Authorization'] != config.ADMIN_TOKEN:
-            raise HTTPException(status_code=403, detail="Unauthorized")
-        return await func(*args, **kwargs)
-    return wrapper
-
+@router.get("/")
+async def admin_home(request: Request):
+    return templates.TemplateResponse(
+            name="admin.html", context={"request": request}
+        )
 
 @router.get("/tasks")
-@only_admin
 async def get_tasks():
     return templates.TemplateResponse(
-            name="tasks.html", context={"tasks": tasks}
+            name="tasks.html", context={"tasks": TASKS}
         )
 
 @router.post("/tasks")
-@only_admin
 async def create_task(playbook: str):
-    task_id = str(len(tasks) + 1)
-    tasks[task_id] = {
+    task_id = str(len(TASKS) + 1)
+    TASKS[task_id] = {
         'status': 'pending',
         'playbook': playbook
     }
 
     def run_playbook(task_id):
-        tasks[task_id]['status'] = 'running'
+        TASKS[task_id]['status'] = 'running'
         try:
             result = subprocess.run(['ansible-playbook', playbook], capture_output=True, text=True)
-            tasks[task_id]['status'] = 'completed'
-            tasks[task_id]['output'] = result.stdout
+            TASKS[task_id]['status'] = 'completed'
+            TASKS[task_id]['output'] = result.stdout
         except Exception as e:
-            tasks[task_id]['status'] = 'failed'
-            tasks[task_id]['error'] = str(e)
+            TASKS[task_id]['status'] = 'failed'
+            TASKS[task_id]['error'] = str(e)
 
     Thread(target=run_playbook, args=(task_id,)).start()
 
     return JSONResponse(content={'task_id': task_id}, status_code=201)
 
 @router.get("/tasks/{task_id}")
-@only_admin
 async def get_task_status(task_id: str):
-    if task_id in tasks:
-        return tasks[task_id]
+    if task_id in TASKS:
+        return TASKS[task_id]
     else:
         raise HTTPException(status_code=404, detail="Task not found")
 
 @router.post("/upload")
-@only_admin
 async def upload_playbook(playbook: UploadFile = File(...)):
     file_location = os.path.join("playbooks", playbook.filename)
     with open(file_location, "wb") as file:

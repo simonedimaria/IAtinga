@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from routes.api import router as api_router
+from routes.admin import router as admin_router
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from config import Config
 
@@ -9,6 +10,7 @@ api = FastAPI(title="api app", docs_url=None, redoc_url=None)
 admin = FastAPI(title="admin app", docs_url=None, redoc_url=None)
 
 api.include_router(api_router)
+admin.include_router(admin_router)
 
 app.mount("/api", api)
 app.mount("/admin", admin)

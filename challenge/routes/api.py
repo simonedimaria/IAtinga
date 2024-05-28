@@ -8,7 +8,10 @@ from config import Config
 lm.config['instruct_model'] = 'LaMini-Flan-T5-248M'
 lm.config['max_tokens'] = 400
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/api",
+    tags=["api"],
+)
 
 class createParams(BaseModel):
     topic: str
@@ -29,19 +32,19 @@ async def createRoom(response: Response, params: createParams):
         return {"message": "A room creation is already in progress"}
 
     # get knowledge repository
-    content = getRepository(params.topic)
+    content = getRepository(params.topic).split("\n\n")
 
     if not content:
         Config.createProgress = False
         return {"message": "Failed to fetch this repository, please try again"}
 
-
     # clear previous context
     lm.docs.clear()
 
-
     # store the doc
-    lm.store_doc(content)
+    for l in content:
+        print(l)
+        lm.store_doc(l)
 
     # save params
     Config.roomID = str(uuid4())
