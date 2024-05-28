@@ -2,14 +2,13 @@ import languagemodels as lm
 from fastapi import APIRouter, Cookie, Response
 from pydantic import BaseModel
 from uuid import uuid4
-from utils import getRepository, evalCode
+from utils import getRepository
 from config import Config
 
 lm.config['instruct_model'] = 'LaMini-Flan-T5-248M'
 lm.config['max_tokens'] = 400
 
 router = APIRouter(
-    prefix="/api",
     tags=["api"],
 )
 
@@ -19,9 +18,6 @@ class createParams(BaseModel):
 class chatParams(BaseModel):
     prompt: str
 
-class copilotParams(BaseModel):
-    code: str
-    copilot_key: str
 
 @router.post("/create")
 async def createRoom(response: Response, params: createParams):

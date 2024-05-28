@@ -13,7 +13,7 @@ TASKS: Dict[str, Dict] = {}
 
 def only_admin(request: Request):
     #authorization: str = request.headers.get('Authorization')
-    #if authorization is None or authorization != f"Bearer {Config.ADMIN_TOKEN}":
+    #if authorization is None or authorization != f"Bearer {Config.boccioni_token}":
     #    raise HTTPException(status_code=403, detail="Unauthorized")
     pass
 
