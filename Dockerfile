@@ -2,7 +2,7 @@ FROM python:3.8.18-bookworm
 
 # Install dependencies
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y supervisor ansible \
+RUN apt-get update && apt-get install -y supervisor ansible uuid-runtime \
     && rm -rf /var/lib/apt/lists/*
 
 # add user
@@ -21,13 +21,13 @@ ENV HOME="/home/IAtinga"
 RUN pip install -r requirements.txt
 
 # Download lm first-run dependencies
-# COPY config/lm_dependencies.py .
-# RUN python lm_dependencies.py
-# RUN rm lm_dependencies.py
+COPY config/lm_dependencies.py .
+RUN python lm_dependencies.py
+RUN rm lm_dependencies.py
 
 # Add readflag binary
 USER root
-COPY flag.txt /root/flag
+COPY flag.txt /root/flag.txt
 
 # Setup superivsord
 COPY config/supervisord.conf /etc/supervisord.conf
