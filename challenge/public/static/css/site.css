@@ -50,6 +50,11 @@ body{
   margin: 0 auto !important;
 }
 
+.button-upload{
+  color: #0073ff  !important;
+  background-color: white !important;
+}
+
 
 textarea::placeholder { /* Standard syntax */
   color: rgb(145, 185, 250) !important;
