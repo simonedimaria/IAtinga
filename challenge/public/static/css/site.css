@@ -45,6 +45,17 @@ body{
   background-color: rgb(47, 92, 255) !important;
 }
 
+.IAtinga-items{
+  width: 34% !important;
+  margin: 0 auto !important;
+}
+
+.button-upload{
+  color: #0073ff  !important;
+  background-color: white !important;
+}
+
+
 textarea::placeholder { /* Standard syntax */
   color: rgb(145, 185, 250) !important;
   opacity: 1 !important;
