@@ -27,7 +27,7 @@ templates = Jinja2Templates(directory="templates")
 @router.get("/")
 async def admin_home(request: Request):
     return templates.TemplateResponse(
-            name="admin.html", context={"request": request}
+            name="admin.html", context={"request": request, "tasks": TASKS}
         )
 
 @router.get("/tasks")

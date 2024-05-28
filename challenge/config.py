@@ -5,4 +5,4 @@ class Config():
     createProgress = False
     chatProgress = False
     knowledgePath = f"{os.getcwd()}/repository"
-    ADMIN_TOKEN = "alepalle"
+    ADMIN_TOKEN = "REDACTED"
