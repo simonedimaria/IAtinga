@@ -2,7 +2,7 @@ FROM python:3.8.18-bookworm
 
 # Install dependencies
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y supervisor gcc \
+RUN apt-get update && apt-get install -y supervisor ansible \
     && rm -rf /var/lib/apt/lists/*
 
 # add user
@@ -28,8 +28,6 @@ RUN rm lm_dependencies.py
 # Add readflag binary
 USER root
 COPY flag.txt /root/flag
-COPY config/readflag.c /
-RUN gcc -o /readflag /readflag.c && chmod 4755 /readflag && rm /readflag.c
 
 # Setup superivsord
 COPY config/supervisord.conf /etc/supervisord.conf

@@ -1,7 +1,6 @@
 import languagemodels as lm
 
 lm.config['instruct_model'] = 'LaMini-Flan-T5-248M'
-lm.config['code_model'] = 'codet5p-220m-py'
 
 lm.store_doc("triggering model and other stuff download")
 
