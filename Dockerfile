@@ -1,4 +1,4 @@
-FROM python:3.8.18-bookworm
+FROM python:3.12-bookworm
 
 # Install dependencies
 ENV DEBIAN_FRONTEND=noninteractive
